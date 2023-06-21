@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: cmap-test-pod
+spec:
+  containers:
+    - name: test-container
+      image: k8s.gcr.io/busybox
+      command:
+      - echo
+      - We are attending a $(TRAINING_NAME) training with $(TRAINER_NAME)
+      env:
+        - name: TRAINING_NAME
+          valueFrom:
+            configMapKeyRef:
+              name: k8s-adv
+              key: training
+        - name: TRAINER_NAME
+          valueFrom:
+            configMapKeyRef:
+              name: k8s-adv
+              key: trainer
+  restartPolicy: Never

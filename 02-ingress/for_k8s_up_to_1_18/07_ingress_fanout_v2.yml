@@ -1,0 +1,20 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+  name: paths-red-yellow
+spec:
+  rules:
+  - host: student.labs.sass.ro
+    http:
+      paths:
+      - backend:
+          serviceName: svc-red
+          servicePort: 8081
+        path: /red(/|$)(.*)
+      - backend:
+          serviceName: svc-yellow
+          servicePort: 8082
+        path: /yellow(/|$)(.*)
+        

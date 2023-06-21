@@ -1,0 +1,78 @@
+
+
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: ds01
+spec:
+  selector:
+    matchLabels:
+      ds: ds01
+  template:
+    metadata:
+      labels:
+        ds: ds01
+    spec:
+      containers:
+      - name: web
+        image: nginx
+      tolerations:
+      - key: key1
+        value: value1
+        operator: Equal
+        effect: NoSchedule
+      - key: key3
+        value: value3
+        operator: Equal
+        
+ 
+# kubectl taint node k8s-adv-main-04 key1=value1:NoSchedule
+# kubectl taint node k8s-adv-main-04 key2=value2:NoSchedule
+# kubectl taint node k8s-adv-main-04 key3=value3:NoExecute
+
+# kubectl get node -o json | jq '.items[] | {name: .metadata.name, taints: .spec.taints}'
+# {
+#   "name": "k8s-adv-main-01-master",
+#   "taints": [
+#     {
+#       "effect": "NoSchedule",
+#       "key": "node-role.kubernetes.io/master"
+#     }
+#   ]
+# }
+# {
+#   "name": "k8s-adv-main-02",
+#   "taints": null
+# }
+# {
+#   "name": "k8s-adv-main-03",
+#   "taints": null
+# }
+# {
+#   "name": "k8s-adv-main-04",
+#   "taints": [
+#     {
+#       "effect": "NoExecute",
+#       "key": "key3",
+#       "value": "value3"
+#     },
+#     {
+#       "effect": "NoSchedule",
+#       "key": "key2",
+#       "value": "value2"
+#     },
+#     {
+#       "effect": "NoSchedule",
+#       "key": "key1",
+#       "value": "value1"
+#     }
+#   ]
+# }
+# {
+#   "name": "k8s-adv-main-05",
+#   "taints": null
+# }
+# {
+#   "name": "k8s-adv-main-06",
+#   "taints": null
+# }

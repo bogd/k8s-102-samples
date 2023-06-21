@@ -1,0 +1,18 @@
+apiVersion: batch/v1
+# Before k8s 1.21: use 
+#apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: cron-lab
+spec:
+  schedule: "* * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: hello
+            image: alpine
+            args:
+            - date
+          restartPolicy: Never

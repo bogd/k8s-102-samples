@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: fanout-red-yellow
+  annotations:
+    # use the shared ingress-nginx
+    kubernetes.io/ingress.class: "nginx"
+spec:
+  rules:
+  - host: student.labs.sass.ro
+    http:
+      paths:
+      - path: /red
+        backend:
+          serviceName: svc-red
+          servicePort: 8081
+      - path: /yellow
+        backend:
+          serviceName: svc-yellow
+          servicePort: 8082
+

@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: vhosts-blue-green
+  annotations:
+    # use the shared ingress-nginx
+    kubernetes.io/ingress.class: "nginx"
+spec:
+  rules:
+  - host: blue.labs.sass.ro
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: svc-blue
+          servicePort: 8080
+  - host: green.labs.sass.ro
+    http:
+      paths:
+      - path: /
+        backend: 
+          serviceName: svc-green
+          servicePort: 8080
+

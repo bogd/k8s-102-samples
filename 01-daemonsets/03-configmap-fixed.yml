@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: k8s-adv
+data:
+  training: "Kubernetes Advanced"
+  days: "2"
+  trainer: Bogdan Sass
+  complex: |
+    - a
+    - b
+    - c
+  
+
