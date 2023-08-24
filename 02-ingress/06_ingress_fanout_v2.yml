@@ -1,34 +1,3 @@
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /$2
-  name: fanout-red-yellow
-spec:
-  ingressClassName: nginx
-  rules:
-  - host: student.labs.sass.ro
-    http:
-      paths:
-      - path: /red(/|$)(.*)
-        pathType: Prefix 
-        backend:
-          service:
-            name: svc-red
-            port: 
-              number: 8081
-
-      - path: /yellow(/|$)(.*)
-        pathType: Prefix
-        backend:
-          service:
-            name: svc-yellow
-            port: 
-              number: 8082
-
-
-
-
 ---
 # We still need to serve the static content from somewhere...
 
@@ -49,3 +18,32 @@ spec:
             name: svc-red
             port: 
               number: 8081         
+---
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+  name: fanout-red-yellow
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: student.labs.sass.ro
+    http:
+      paths:
+      - path: /red(/|$)(.*)
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: svc-red
+            port: 
+              number: 8081
+
+      - path: /yellow(/|$)(.*)
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: svc-yellow
+            port: 
+              number: 8082
